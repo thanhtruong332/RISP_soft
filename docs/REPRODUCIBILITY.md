@@ -4,7 +4,7 @@
 | --- | --- |
 | RTL origin | Custom RTL snapshot supplied by the project owner |
 | Repository | https://github.com/thanhtruong332/RISP_soft |
-| Release | `v1.0.0` (use `git rev-parse v1.0.0` for the immutable commit) |
+| Release | `v1.2.0` (use `git rev-parse v1.2.0^{commit}` for the immutable commit) |
 | License | No open-source license is declared; see `LICENSE_STATUS.md` |
 | ISA | RV32I, ISA specification version 2.1 |
 | Pipeline | Non-pipelined, single-instruction datapath |
@@ -22,3 +22,7 @@
 The twelve committed memory images correspond to four AES modes and three
 payloads. The matching self-checking testbenches report cycle and instruction
 counters and compare every ciphertext block with its expected value.
+
+## Curated evidence package
+
+The [`reproducibility/`](../reproducibility/) directory contains the measured artifacts, tool metadata and SHA-256 inventory associated with this release. Run `python reproducibility/verify_sha256.py` from any directory to verify it.
