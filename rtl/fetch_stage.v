@@ -1,3 +1,4 @@
+// Author: Thanh Truong
 `timescale 1ns / 1ps
 module fetch_stage (
     input clk, rst_n, stall,
@@ -14,8 +15,7 @@ module fetch_stage (
         else if (!stall) pc_reg <= next_pc;
     end
 
-    // DÙNG pc_reg ĐỂ MÔ PHỎNG KHÔNG BỊ TREO CỨNG
-    assign imem_addr = pc_reg; 
+    assign imem_addr = pc_reg;
     assign pc        = pc_reg;
     assign insn      = (!rst_n) ? 32'h00000013 : imem_rdata;
 endmodule

@@ -1,3 +1,4 @@
+// Author: Thanh Truong
 `timescale 1ns / 1ps
 
 module i_type_block (
@@ -23,10 +24,8 @@ module i_type_block (
     always @(*) begin
         dmem_read = 1'b0;
         rdest_data = 32'b0;
-        
-        // ---> FIX LỖI Ở ĐÂY: Trích xuất địa chỉ thanh ghi đích từ lệnh (bit 11 đến 7)
-        rdest_addr = insn[11:7]; 
-        // <---
+
+        rdest_addr = insn[11:7];
 
         case (opcode)
             7'b0010011: begin // ALU Immediate
@@ -45,7 +44,7 @@ module i_type_block (
                 dmem_read = 1'b1;
                 case (funct3)
                     3'b000: begin // LB
-                        case(addr[1:0])
+                        case (addr[1:0])
                             2'b00: rdest_data = {{24{dmem_rdata[7]}},  dmem_rdata[7:0]};
                             2'b01: rdest_data = {{24{dmem_rdata[15]}}, dmem_rdata[15:8]};
                             2'b10: rdest_data = {{24{dmem_rdata[23]}}, dmem_rdata[23:16]};
@@ -53,7 +52,7 @@ module i_type_block (
                         endcase
                     end
                     3'b100: begin // LBU
-                        case(addr[1:0])
+                        case (addr[1:0])
                             2'b00: rdest_data = {24'b0, dmem_rdata[7:0]};
                             2'b01: rdest_data = {24'b0, dmem_rdata[15:8]};
                             2'b10: rdest_data = {24'b0, dmem_rdata[23:16]};

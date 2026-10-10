@@ -64,7 +64,6 @@ module tb_expG_scale_rissp_256b_cbc;
             MEM_RDATA = 32'h0;
     end
 
-    
     task count_instruction;
         input [31:0] instruction;
         reg [6:0] opcode;
@@ -78,8 +77,6 @@ module tb_expG_scale_rissp_256b_cbc;
                 7'b0100011: store_count <= store_count + 1;
                 7'b1100011: begin
                     branch_count <= branch_count + 1;
-                    // RISSP resolves the branch in its single-instruction datapath.
-                    // A non-sequential next_pc is therefore a directly observed taken branch.
                     if (DUT.next_pc != (DUT.pc + 32'd4))
                         taken_branch_count <= taken_branch_count + 1;
                 end
@@ -148,9 +145,6 @@ module tb_expG_scale_rissp_256b_cbc;
         end
     end
 
-
-
-
     always @(posedge clk) begin
         if (rst_n && MEM_WRITE && MEM_READY && (^MEM_ADDR !== 1'bx)) begin
             mem_index = (MEM_ADDR & 32'h0000ffff) >> 2;
@@ -175,6 +169,11 @@ module tb_expG_scale_rissp_256b_cbc;
                     counter_errors = counter_errors + 1;
                 if (derived_total_stalls != control_stalls + load_use_stalls + memory_stalls)
                     counter_errors = counter_errors + 1;
+                $display("============================================================");
+                $display("[SOFTWARE_AES_SUMMARY] CORE=RISSP MODE=CBC PAYLOAD_BYTES=%0d BLOCKS=%0d", PAYLOAD_BYTES, BLOCKS);
+                $display("[SOFTWARE_AES_SUMMARY] MEASURE_WINDOW=START_MARKER_TO_STOP_MARKER START_CYCLE=%0d STOP_CYCLE=%0d", start_cycle, start_cycle+raw_cycles);
+                $display("[SOFTWARE_AES_SUMMARY] TOTAL_CYCLES=%0d CYCLES_PER_BLOCK=%0f RETIRED=%0d CPI=%0f", raw_cycles, raw_cycles/(BLOCKS*1.0), retired, raw_cycles/(retired*1.0));
+                $display("============================================================");
                 $display("[EXP_G] CORE=RISSP MODE=CBC REPEAT=%0d PAYLOAD_BYTES=%0d BLOCKS=%0d", repeat_id, PAYLOAD_BYTES, BLOCKS);
                 $display("[EXP_G] START=%0d STOP=%0d RAW_CYCLES=%0d CYCLES_PER_BLOCK=%0f", start_cycle, start_cycle+raw_cycles, raw_cycles, raw_cycles/(BLOCKS*1.0));
                 $display("[EXP_G] RETIRED=%0d CPI=%0f ALU=%0d LOAD=%0d STORE=%0d BRANCH=%0d JUMP=%0d M=%0d B=%0d", retired, raw_cycles/(retired*1.0), alu_count, load_count, store_count, branch_count, jump_count, m_count, b_count);
@@ -480,6 +479,11 @@ module tb_expG_scale_rissp_256b_cbc;
 
     initial begin
         #100000000;
+        $display("============================================================");
+        $display("[SOFTWARE_AES_SUMMARY] CORE=RISSP MODE=CBC PAYLOAD_BYTES=%0d BLOCKS=%0d", PAYLOAD_BYTES, BLOCKS);
+        $display("[SOFTWARE_AES_SUMMARY] MEASURE_WINDOW=START_MARKER_TO_STOP_MARKER START_CYCLE=%0d STOP_CYCLE=%0d", start_cycle, start_cycle+raw_cycles);
+        $display("[SOFTWARE_AES_SUMMARY] TOTAL_CYCLES=%0d CYCLES_PER_BLOCK=%0f RETIRED=%0d CPI=%0f", raw_cycles, raw_cycles/(BLOCKS*1.0), retired, raw_cycles/(retired*1.0));
+        $display("============================================================");
         $display("[EXP_G] CORE=RISSP MODE=CBC REPEAT=%0d RESULT=TIMEOUT PC=%08x INSN=%08x CYCLE=%0d MEM_ADDR=%08x", repeat_id, INST_ADDR, INST_DATA, cycle_count, MEM_ADDR);
         $finish;
     end

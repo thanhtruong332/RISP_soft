@@ -1,3 +1,4 @@
+// Author: Thanh Truong
 `timescale 1ns / 1ps
 module axi_rissp_master (
     input clk, rst_n,
@@ -41,23 +42,13 @@ module axi_rissp_master (
     reg [2:0] state;
     reg aw_done, w_done, b_done, ar_done, r_done;
 
-    // BUG FIX 1: stall_cpu
-    // TRƯỚC: stall = cpu_req khi IDLE → stall 1 cycle thừa
-    //        khiến fetch_stage dùng pc_reg thay vì next_pc
-    //        → BRAM fetch sai instruction
     // Stall while an AXI transaction is in progress.
-    //        tức là transaction đang thật sự diễn ra
+
     wire cpu_req = (|dmem_wstrb) || dmem_read;
     assign stall_cpu = (state != IDLE);
 
-    // BUG FIX 2: write_complete / read_complete
-    // TRƯỚC: dùng combinational check (bvalid && bready)
-    //        → write_complete=1 cùng cycle bvalid lên
-    //        → state về IDLE ngay, b_done chưa kịp set
-    //        → cycle sau: IDLE + cpu_req=1 → stall lại
-    //        → CPU execute lại sw instruction → AXI double-write
     // Complete only after all required channel handshakes finish.
-    //        (registered, tức là handshake đã xong cycle trước)
+
     wire write_complete = (state == WRITE_DATA) &&
                           aw_done && w_done && b_done;
 
@@ -77,13 +68,19 @@ module axi_rissp_master (
             m_axi_arvalid <= 0;
             m_axi_rready  <= 0;
             dmem_rdata    <= 32'h0;
-            aw_done <= 0; w_done <= 0; b_done <= 0;
-            ar_done <= 0; r_done <= 0;
+            aw_done <= 0;
+            w_done  <= 0;
+            b_done  <= 0;
+            ar_done <= 0;
+            r_done  <= 0;
         end else begin
             case (state)
                 IDLE: begin
-                    aw_done <= 0; w_done <= 0; b_done <= 0;
-                    ar_done <= 0; r_done <= 0;
+                    aw_done <= 0;
+                    w_done  <= 0;
+                    b_done  <= 0;
+                    ar_done <= 0;
+                    r_done  <= 0;
 
                     if (cpu_req) begin
                         if (|dmem_wstrb) begin
@@ -120,7 +117,6 @@ module axi_rissp_master (
                         m_axi_bready <= 0;
                         b_done       <= 1;
                     end
-                    // Chỉ về IDLE sau khi tất cả done flags đã set
                     if (write_complete) state <= IDLE;
                 end
 

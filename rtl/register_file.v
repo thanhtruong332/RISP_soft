@@ -1,13 +1,14 @@
+// Author: Thanh Truong
 `timescale 1ns / 1ps
 module register_file (
-    input         clk, 
-    input         rst_n, 
+    input         clk,
+    input         rst_n,
     input         wen,
-    input  [4:0]  rs1_addr, 
-    input  [4:0]  rs2_addr, 
+    input  [4:0]  rs1_addr,
+    input  [4:0]  rs2_addr,
     input  [4:0]  rdest_addr,
     input  [31:0] rdest_data,
-    output [31:0] rs1_data, 
+    output [31:0] rs1_data,
     output [31:0] rs2_data
 );
     reg [31:0] regs [0:31];
