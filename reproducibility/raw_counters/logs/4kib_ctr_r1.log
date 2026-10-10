@@ -3,8 +3,8 @@
 # SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
 # IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
 # SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-# Start of session at: Tue Oct  6 21:16:01 2026
-# Process ID         : 12180
+# Start of session at: Sat Oct 10 10:03:52 2026
+# Process ID         : 11560
 # Current directory  : F:/advance_topic/UTE-PAPER/Experiment_G/payload_scaling/runs/RISSP
 # Command line       : xsim.exe -log 4kib_ctr_r1.log -mode tcl -source {xsim.dir/snap_scale_rissp_4kib_ctr/xsim_script.tcl}
 # Log file           : F:/advance_topic/UTE-PAPER/Experiment_G/payload_scaling/runs/RISSP/4kib_ctr_r1.log
@@ -17,17 +17,22 @@
 # CPU Physical cores : 6
 # CPU Logical cores  : 12
 # Host memory        : 16487 MB
-# Swap memory        : 11811 MB
-# Total Virtual      : 28299 MB
-# Available Virtual  : 16347 MB
+# Swap memory        : 12348 MB
+# Total Virtual      : 28835 MB
+# Available Virtual  : 13464 MB
 #-----------------------------------------------------------
 source xsim.dir/snap_scale_rissp_4kib_ctr/xsim_script.tcl
 # xsim {snap_scale_rissp_4kib_ctr} -testplusarg REPEAT=1 -autoloadwcfg -runall
 Time resolution is 1 ps
 run -all
+============================================================
+[SOFTWARE_AES_SUMMARY] CORE=RISSP MODE=CTR PAYLOAD_BYTES=4096 BLOCKS=256
+[SOFTWARE_AES_SUMMARY] MEASURE_WINDOW=START_MARKER_TO_STOP_MARKER START_CYCLE=21 STOP_CYCLE=1601722
+[SOFTWARE_AES_SUMMARY] TOTAL_CYCLES=1601701 CYCLES_PER_BLOCK=6256.644531 RETIRED=1601700 CPI=1.000001
+============================================================
 [EXP_G] CORE=RISSP MODE=CTR REPEAT=1 PAYLOAD_BYTES=4096 BLOCKS=256
-[EXP_G] START=21 STOP=1605818 RAW_CYCLES=1605797 CYCLES_PER_BLOCK=6272.644531
-[EXP_G] RETIRED=1605796 CPI=1.000001 ALU=859904 LOAD=317155 STORE=226875 BRANCH=196456 JUMP=5406 M=0 B=0
+[EXP_G] START=21 STOP=1601722 RAW_CYCLES=1601701 CYCLES_PER_BLOCK=6256.644531
+[EXP_G] RETIRED=1601700 CPI=1.000001 ALU=855808 LOAD=317155 STORE=226875 BRANCH=196456 JUMP=5406 M=0 B=0
 [EXP_G] TAKEN_BRANCH=166473 BRANCH_PENALTY_CYCLES=0
 [EXP_G] TOTAL_STALLS=0 CONTROL_STALLS=0 LOAD_USE_STALLS=0 MEMORY_STALLS=0 OTHER_STALLS=0
 [EXP_G] COUNTER_ERRORS=0 COUNTER_CHECK=PASS
@@ -289,7 +294,7 @@ run -all
 [EXP_G_BLOCK] BLOCK=254 OBSERVED=c3393ca2d6cbfb89e071408bc3f91458 EXPECTED=c3393ca2d6cbfb89e071408bc3f91458
 [EXP_G_BLOCK] BLOCK=255 OBSERVED=2fb01b72fe6a45c9f628acdcdae2cf5c EXPECTED=2fb01b72fe6a45c9f628acdcdae2cf5c
 [EXP_G_BLOCK] BLOCK=256 OBSERVED=9e284790852d5673459b6c676cdef8b9 EXPECTED=9e284790852d5673459b6c676cdef8b9
-$finish called at time : 41887012500 ps : File "F:/advance_topic/UTE-PAPER/Experiment_G/payload_scaling/generated/RISSP/tb_expG_scale_rissp_4kib_ctr.v" Line 205
-run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 194.941 ; gain = 0.000
+$finish called at time : 41784612500 ps : File "F:/advance_topic/UTE-PAPER/Experiment_G/payload_scaling/generated/RISSP/tb_expG_scale_rissp_4kib_ctr.v" Line 210
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:00:07 . Memory (MB): peak = 194.402 ; gain = 0.000
 exit
-INFO: [Common 17-206] Exiting xsim at Tue Oct  6 21:16:10 2026...
+INFO: [Common 17-206] Exiting xsim at Sat Oct 10 10:04:01 2026...

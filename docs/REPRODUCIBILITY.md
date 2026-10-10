@@ -4,7 +4,7 @@
 | --- | --- |
 | RTL origin | Custom RTL snapshot supplied by the project owner |
 | Repository | https://github.com/thanhtruong332/RISP_soft |
-| Release | `v1.2.1` (use `git rev-parse v1.2.1^{commit}` for the immutable commit) |
+| Release | `v1.2.2` (use `git rev-parse v1.2.2^{commit}` for the immutable commit) |
 | License | No open-source license is declared; see `LICENSE_STATUS.md` |
 | ISA | RV32I, ISA specification version 2.1 |
 | Pipeline | Non-pipelined, single-instruction datapath |
